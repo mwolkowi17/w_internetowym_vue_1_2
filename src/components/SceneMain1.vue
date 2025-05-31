@@ -12,8 +12,6 @@ function spaceKeydown(event) {
     if (event.code === 'Space') {
         console.log('Naciśnięto Space');
         kostka_click()
-        //emit('koniec-planszy');
-        //document.removeEventListener('keydown', arguments.callee); // Usunięcie nasłuchiwania po pierwszym naciśnięciu
     }
 }
 
@@ -24,20 +22,7 @@ onUnmounted(() => {
     document.removeEventListener('keydown', spaceKeydown);
 });
 
-//========================================================
 
-// document.addEventListener('keydown', function (event) {
-//     if (event.code === 'Space') {
-//         console.log('Naciśnięto Space');
-//         kostka_click()
-//         //emit('koniec-planszy');
-//         //document.removeEventListener('keydown', arguments.callee); // Usunięcie nasłuchiwania po pierwszym naciśnięciu
-//     }
-//     //   console.log('Naciśnięto klawisz:', event.key);
-//     //   emit('koniec-planszy');
-// });
-
-//========================================================
 
 //roboczo tylko dla starej funkcji
 const postac1 = ref("postać")
@@ -104,6 +89,7 @@ let ruch_lokalny = 0;
 function kostka_click() {
 
     if_rzuc_kostka.value = false //  ukryj przycisk rzuć kostką
+    document.removeEventListener('keydown', spaceKeydown);
     //========================================================================================
     let i = 0; //  set your counter to 0
     //========================================================================================
@@ -239,6 +225,7 @@ const koniecPulapki = () => {
     pionek_left.value = pozycje_pionka_gracza1[krok_gracz1_na_planszy.value - 1][0]
     pionek_top.value = pozycje_pionka_gracza1[krok_gracz1_na_planszy.value - 1][1]
     if_rzuc_kostka.value = true;
+    document.addEventListener('keydown', spaceKeydown)
 }
 
 const odejmijSzanse = () => {
@@ -259,6 +246,10 @@ const odejmijSzanse = () => {
         emit('przegrana');
     }
 }
+// roboczo dla obsługi spacji
+function Spacja(){
+    document.addEventListener('keydown', spaceKeydown)
+}
 
 </script>
 <template>
@@ -277,7 +268,7 @@ const odejmijSzanse = () => {
         'kostka1image6': isSet6
     }" v-if="if_widok_kostki"></div>
     <SceneTrap v-if="if_widok_pulapki" @koniec-pulapka="if_widok_pulapki = false, koniecPulapki()" />
-    <SceneQuizz1 v-if="if_widok_quizz1" @koniec-quizz="if_widok_quizz1 = false, if_rzuc_kostka = true"
+    <SceneQuizz1 v-if="if_widok_quizz1" @koniec-quizz="if_widok_quizz1 = false, if_rzuc_kostka = true, Spacja()"
         @odejmij-szanse="odejmijSzanse" msg="Hej" :miejsceNaPlanszy="krok_gracz1_na_planszy" />
 </template>
 <style scoped>
