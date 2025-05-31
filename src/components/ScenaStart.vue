@@ -13,29 +13,41 @@ const emit = defineEmits(['koniec-planszy'])
 //     //   emit('koniec-planszy');
 // });
 
+const if_ramka1= ref(false);
 
 // przykład obsługi zdarzeń z klawiatury w Vue 3
 function handleKeydown(event) {
+    event.preventDefault(); // Zapobiega domyślnemu zachowaniu przeglądarki, np. przeładowaniu strony przy naciśnięciu Enter
     if (event.key === 'Enter') {
         console.log('Naciśnięto Enter');
         emit('koniec-planszy');
     }
+     if (event.code === 'Tab') {
+        console.log('Naciśnięto Tab');
+        if_ramka1.value = true;
+    }
+
 }
 
-onMounted(() => {document.addEventListener('keydown', handleKeydown);}
+
+onMounted(
+    () => {document.addEventListener('keydown', handleKeydown)}
+        //   ()=>{document.addEventListener('keydown', handleTabdown);}
 )
 
-onUnmounted(() => {
-    document.removeEventListener('keydown', handleKeydown);
-});
+
+onUnmounted(() => {document.removeEventListener('keydown', handleKeydown);}
+              
+)
 </script>
 
 <template>
     <div class="tlo" aria-label="Plansza startowa" ></div>
-    <button class="start" @click="$emit('koniec-planszy')" aria-label="Start gry" aria-disabled="false"></button>
+    <div class="ramka" v-if="if_ramka1"></div>
+    <button class="start" @click="$emit('koniec-planszy')" role="img" alt="ikona Start" aria-label="Start gry" aria-disabled="false"></button>
 </template>
 
-<style>
+<style scoped>
 .tytul {
     color: greenyellow;
 }
@@ -65,5 +77,17 @@ onUnmounted(() => {
 
 .start:hover {
     cursor: pointer;
+}
+
+.ramka{
+    background-image: url("../assets/ramka_button.png");
+    background-size: 314px 118px;
+    /* background-position: -3px -8px; */
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 392px;
+    left: 462px;
+    width: 314px;
+    height: 118px;
 }
 </style>
