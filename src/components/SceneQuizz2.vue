@@ -261,23 +261,26 @@ function sprawdzOdpowiedz() {
     height: 40px;
     width: 40px;
     position: absolute;
-
+    visibility: hidden;
     z-index: 1;
 }
 
 .krzyzyk1 {
     top: 310px;
     left: 135px;
+    visibility: visible;
 }
 
 .krzyzyk2 {
     top: 390px;
     left: 135px;
+    visibility: visible;
 }
 
 .krzyzyk3 {
     top: 470px;
     left: 135px;
+    visibility: visible;
 }
 
 .odpowiedz {

@@ -93,22 +93,22 @@ onUnmounted(() => { document.removeEventListener('keydown', handleKeydown); }
 
 .ramka {
     background-image: url("../assets/ramka_button.png");
-    background-size: 550px 180px;
+    background-size: 455px 180px;
     /* background-position: -3px -8px; */
     background-repeat: no-repeat;
     position: absolute;
  
-    width: 550px;
+    width: 455px;
     height: 180px;
 }
 
 .ramka-lewa{
-   top: 267px;
-    left: 110px;
+ top: 267px;
+    left: 150px;
 }
 
 .ramka-prawa{
     top: 267px;
-    left: 627px;
+    left: 675px;
 }
 </style>

@@ -60,13 +60,13 @@ onUnmounted(() => { document.removeEventListener('keydown', handleKeydown); }
 
 .ramka {
     background-image: url("../assets/ramka_button.png");
-    background-size: 550px 180px;
+    background-size: 455px 180px;
     /* background-position: -3px -8px; */
     background-repeat: no-repeat;
     position: absolute;
     top: 267px;
-    left: 110px;
-    width: 550px;
+    left: 150px;
+    width: 455px;
     height: 180px;
 }
 </style>

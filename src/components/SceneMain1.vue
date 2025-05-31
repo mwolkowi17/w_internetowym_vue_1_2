@@ -8,18 +8,34 @@ import SceneTrap from './SceneTrap.vue';
 
 const emit = defineEmits(['koniec-etap1', 'przegrana'])
 
-function spaceKeydown(event) {
-    if (event.code === 'Space') {
-        console.log('Naciśnięto Space');
-        kostka_click()
+const if_ramka1= ref(false);
+
+// function handleKeydown(event) {
+//     if (event.code === 'Space') {
+//         console.log('Naciśnięto Space');
+//         kostka_click()
+//     }
+// }
+
+function handleKeydown(event) {
+    event.preventDefault();
+    if (event.key === 'Enter') {
+        console.log('Naciśnięto Enter');
+        kostka_click();
+        if_ramka1.value = false; // ukryj ramkę
     }
+     if (event.code === 'Tab') {
+        console.log('Naciśnięto Tab');
+        if_ramka1.value = true;
+    }
+
 }
 
-onMounted(() => { document.addEventListener('keydown', spaceKeydown); }
+onMounted(() => { document.addEventListener('keydown', handleKeydown); }
 )
 
 onUnmounted(() => {
-    document.removeEventListener('keydown', spaceKeydown);
+    document.removeEventListener('keydown', handleKeydown);
 });
 
 
@@ -89,7 +105,7 @@ let ruch_lokalny = 0;
 function kostka_click() {
 
     if_rzuc_kostka.value = false //  ukryj przycisk rzuć kostką
-    document.removeEventListener('keydown', spaceKeydown);
+    document.removeEventListener('keydown', handleKeydown);
     //========================================================================================
     let i = 0; //  set your counter to 0
     //========================================================================================
@@ -225,7 +241,7 @@ const koniecPulapki = () => {
     pionek_left.value = pozycje_pionka_gracza1[krok_gracz1_na_planszy.value - 1][0]
     pionek_top.value = pozycje_pionka_gracza1[krok_gracz1_na_planszy.value - 1][1]
     if_rzuc_kostka.value = true;
-    document.addEventListener('keydown', spaceKeydown)
+    document.addEventListener('keydown', handleKeydown)
 }
 
 const odejmijSzanse = () => {
@@ -248,7 +264,7 @@ const odejmijSzanse = () => {
 }
 // roboczo dla obsługi spacji
 function Spacja(){
-    document.addEventListener('keydown', spaceKeydown)
+    document.addEventListener('keydown', handleKeydown)
 }
 
 </script>
@@ -258,6 +274,7 @@ function Spacja(){
     <div class="szansa1 szansa_ksztalt1" v-if="if_szansa1"></div>
     <div class="szansa2 szansa_ksztalt1" v-if="if_szansa2"></div>
     <div class="szansa3 szansa_ksztalt1" v-if="if_szansa3"></div>
+    <div class="ramka" v-if="if_ramka1"></div>
     <button class="rzut1" v-if="if_rzuc_kostka" @click="kostka_click()"></button>
     <div class="kostka1" :class="{
         'kostka1image1': isSet1,
@@ -368,5 +385,17 @@ function Spacja(){
 .szansa3 {
     top: 267px;
     left: 1180px;
+}
+
+.ramka{
+    background-image: url("../assets/ramka_button.png");
+    background-size:261px 100px;
+    /* background-position: -3px -8px; */
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 350px;
+    left:980px;
+    width: 261px;
+    height: 100px;
 }
 </style>
