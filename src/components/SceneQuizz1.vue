@@ -8,7 +8,7 @@ const props = defineProps({
 });
 
 const if_ramka1 = ref(false);
-const if_ramka_odp1 = ref(false);
+const if_ramka_dalej1 = ref(false);
 
 const is_ramka_odp1 = ref(false);
 const is_ramka_odp2 = ref(true);
@@ -26,8 +26,8 @@ function handleKeydown(event) {
        zaznaczenie1()
       console.log("Wybór 1");
     } 
-    else 
-    // else if (choice.value === 2)
+    //else 
+    else if (choice.value === 2)
     {
        is_krzyzyk2.value = true
        is_krzyzyk1.value = false
@@ -35,7 +35,11 @@ function handleKeydown(event) {
        zaznaczenie2()
       console.log("Wybór 2");
     }
-
+    else if (choice.value === 3) {
+      console.log("Wybór 3");
+      sprawdzOdpowiedz()
+      if_ramka_dalej1.value = false;
+    }
   }
   if (event.code === 'Tab') {
     console.log('Naciśnięto Tab');
@@ -45,15 +49,17 @@ function handleKeydown(event) {
       console.log(choice.value);
       is_ramka_odp1.value = false;
       is_ramka_odp2.value = true;
+       if_ramka_dalej1.value = false;
       choice.value = 2;
     } 
-    else
-    //else if (choice.value === 2)
+    //else
+    else if (choice.value === 2 && if_button_dalej.value===false)
      {
       console.log("Zmieniam na 1");
       console.log(choice.value);
       is_ramka_odp1.value = true;
       is_ramka_odp2.value = false;
+      
       choice.value = 1;
      // if(if_button_dalej.value===false) {
       //choice.value = 1;
@@ -62,13 +68,24 @@ function handleKeydown(event) {
       //  choice.value = 3;
       // }
     }
-    // else if (choice.value === 3) {
-    //   console.log("Zmieniam na 3");
-    //  choice.value = 1;
-    //   is_ramka_odp1.value = false;
-    //   is_ramka_odp2.value = false;
-     
-    // }
+    //!!!!!
+    //tu gdzieś może else if doryczący zmiany na 3
+
+    else if(choice.value===2 && if_button_dalej.value===true) {
+      console.log("Zmieniam na 3 z przyciskiem dalej");
+      is_ramka_odp1.value = false;
+      is_ramka_odp2.value = false;
+      if_ramka1.value = false;
+      if_ramka_dalej1.value = true;
+      choice.value = 3;
+    }
+    else if (choice.value === 3) {
+      console.log("Zmieniam na 1");
+     choice.value = 1;
+      is_ramka_odp1.value = true;
+      is_ramka_odp2.value = false;
+      if_ramka_dalej1.value = false;
+    }
     
   }
 }
@@ -171,7 +188,7 @@ function sprawdzOdpowiedz() {
 
   <p class="pytanie1">{{ quizz_assets_data.pokaz_zadanie_2(props.miejsceNaPlanszy).tresc }}</p>
   <div class="ramka" :class="{ 'ramka_odp1': is_ramka_odp1, 'ramka_odp2': is_ramka_odp2 }" v-if="if_ramka1"></div>
-  <div class="ramka_odp"  v-if="if_ramka_odp1"></div>
+  <div class="ramka_dalej1"  v-if="if_ramka_dalej1"></div>
   <div class="krzyzyk" :class="{ 'krzyzyk1': is_krzyzyk1, 'krzyzyk2': is_krzyzyk2 }"></div>
   <div class="pole-zazn pole1" @click="is_krzyzyk1 = true,
     is_krzyzyk2 = false,
@@ -410,5 +427,17 @@ function sprawdzOdpowiedz() {
 .ramka_odp2 {
   top: 380px;
   left: 125px;
+}
+
+.ramka_dalej1{
+    background-image: url("../assets/ramka_button.png");
+    background-size: 310px 100px;
+    /* background-position: -3px -8px; */
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 474px;
+    left: 184px;
+    width: 310px;
+    height: 100px;
 }
 </style>
