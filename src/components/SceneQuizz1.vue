@@ -9,9 +9,10 @@ const props = defineProps({
 
 const if_ramka1 = ref(false);
 const if_ramka_dalej1 = ref(false);
+const if_ramka_dalej2 = ref(false);
 
 const is_ramka_odp1 = ref(false);
-const is_ramka_odp2 = ref(true);
+const is_ramka_odp2 = ref(false);
 
 const choice = ref(1);
 
@@ -38,7 +39,15 @@ function handleKeydown(event) {
     else if (choice.value === 3) {
       console.log("Wybór 3");
       sprawdzOdpowiedz()
+      if_ramka1.value = false;
       if_ramka_dalej1.value = false;
+      choice.value = 4;
+      //if_ramka_dalej2.value = true;// zobaczyć czy to działa może dodać licznik 4
+    }
+    else if (choice.value === 4) {
+      console.log("Wybór 4");
+      emit('koniec-quizz')
+      choice.value = 1;
     }
   }
   if (event.code === 'Tab') {
@@ -47,6 +56,7 @@ function handleKeydown(event) {
     if (choice.value === 1) {
       console.log("Zmieniam na 2");
       console.log(choice.value);
+   
       is_ramka_odp1.value = false;
       is_ramka_odp2.value = true;
        if_ramka_dalej1.value = false;
@@ -57,6 +67,7 @@ function handleKeydown(event) {
      {
       console.log("Zmieniam na 1");
       console.log(choice.value);
+     
       is_ramka_odp1.value = true;
       is_ramka_odp2.value = false;
       
@@ -85,6 +96,10 @@ function handleKeydown(event) {
       is_ramka_odp1.value = true;
       is_ramka_odp2.value = false;
       if_ramka_dalej1.value = false;
+    }
+    else if (choice.value === 4){
+      if_ramka1.value = false;
+      if_ramka_dalej2.value = true;
     }
     
   }
@@ -189,6 +204,7 @@ function sprawdzOdpowiedz() {
   <p class="pytanie1">{{ quizz_assets_data.pokaz_zadanie_2(props.miejsceNaPlanszy).tresc }}</p>
   <div class="ramka" :class="{ 'ramka_odp1': is_ramka_odp1, 'ramka_odp2': is_ramka_odp2 }" v-if="if_ramka1"></div>
   <div class="ramka_dalej1"  v-if="if_ramka_dalej1"></div>
+  <div class="ramka_dalej2"  v-if="if_ramka_dalej2"></div>
   <div class="krzyzyk" :class="{ 'krzyzyk1': is_krzyzyk1, 'krzyzyk2': is_krzyzyk2 }"></div>
   <div class="pole-zazn pole1" @click="is_krzyzyk1 = true,
     is_krzyzyk2 = false,
@@ -439,5 +455,17 @@ function sprawdzOdpowiedz() {
     left: 184px;
     width: 310px;
     height: 100px;
+}
+.ramka_dalej2{
+    background-image: url("../assets/ramka_button.png");
+    background-size: 168px 70px;
+    /* background-position: -3px -8px; */
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 424px;
+    left: 364px;
+    width: 168px;
+    height: 70px;
+    z-index: 4
 }
 </style>
